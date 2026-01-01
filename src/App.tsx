@@ -6,6 +6,7 @@ import Header from './components/header'
 //Pages
 import Home from './pages/Home'
 import LoginPage from './pages/Login'
+import InitialPage from './pages/InitialPage'
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path='initial-page' element={<InitialPage/>} />
+          
         </Routes>
       </Router>
     </>

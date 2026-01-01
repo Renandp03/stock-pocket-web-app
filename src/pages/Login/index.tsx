@@ -43,59 +43,76 @@ function LoginPage(){
     }
 
     return (
-        <main className="flex items-center justify-center h-[calc(100vh-72px)]">
-            <section className="flex flex-col items-center justify-center gap-4 w-full h-full">
-                <Card className="w-full max-w-sm">
-                    <CardHeader>
-                        <CardTitle>Login to your account</CardTitle>
-                        <CardDescription>
-                        Enter your email below to login to your account
-                        </CardDescription>
-                        <CardAction>
-                        <Button variant="link">Sign Up</Button>
-                        </CardAction>
-                    </CardHeader>
-                    <CardContent>
-                        <form>
-                        <div className="flex flex-col gap-6">
-                            <div className="grid gap-2">
-                            <Label htmlFor="email">Email</Label>
-                            <Input
-                                id="email"
-                                type="email"
-                                placeholder="m@example.com"
-                                required
-                                {...register('email')}
-                            />
+        <main className="min-h-screen flex">
+            <section className="w-full lg:w-1/2 bg-white flex items-center justify-center px-6">
+                <div className="w-full max-w-md">
+                    <h1 className="text-2xl font-semibold mb-6">Bem vindo ao Stock Pocket!</h1>
+                    <Card className="w-full max-w-sm">
+                        <CardHeader>
+                            <CardTitle>Login da plataforma</CardTitle>
+                            <CardDescription>
+                                Entre com sua conta fornecida
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <form>
+                            <div className="flex flex-col gap-6">
+                                <div className="grid gap-2">
+                                <Label htmlFor="email">Email</Label>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    placeholder="m@example.com"
+                                    required
+                                    {...register('email')}
+                                />
+                                </div>
+                                <div className="grid gap-2">
+                                <div className="flex items-center">
+                                    <Label htmlFor="password">Senha</Label>
+                                    <a
+                                    href="#"
+                                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                                    >
+                                        Esqueceu sua senha?
+                                    </a>
+                                </div>
+                                <Input id="password" type="password" required {...register('password')} />
+                                </div>
                             </div>
-                            <div className="grid gap-2">
-                            <div className="flex items-center">
-                                <Label htmlFor="password">Password</Label>
-                                <a
-                                href="#"
-                                className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                                >
-                                Forgot your password?
-                                </a>
-                            </div>
-                            <Input id="password" type="password" required {...register('password')} />
-                            </div>
-                        </div>
-                        </form>
-                    </CardContent>
-                    <CardFooter className="flex-col gap-2">
-                        <Button type="submit" className="w-full" onClick={handleSubmit(onSubmit)}>
-                        Login
-                        </Button>
-                        <Button variant="outline" className="w-full">
-                        Login with Google
-                        </Button>
-                    </CardFooter>
-                </Card>
-                
+                            </form>
+                        </CardContent>
+                        <CardFooter className="flex-col gap-2">
+                            <Button type="submit" className="w-full cursor-pointer" onClick={handleSubmit(onSubmit)}>
+                                Entrar
+                            </Button>
+                            <Button variant="outline" className="w-full">
+                                Login com Google
+                            </Button>
+                        </CardFooter>
+                    </Card>
+                </div>
             </section>
-            <section className="flex flex-col items-center justify-center gap-4 bg-[url(https://images.pexels.com/photos/1797428/pexels-photo-1797428.jpeg)] w-full h-full bg-cover bg-center opacity-70">
+            <section
+                className="
+                hidden lg:flex
+                w-1/2
+                relative
+                bg-cover bg-center
+                "
+                style={{
+                backgroundImage: `url('https://pixabay.com/pt/images/download/restaurant-4011989_1920.jpg')`,
+                }}
+            >
+                <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-black/30 to-black/60 " />
 
+                <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.6)]" />
+
+                <div className="relative z-10 p-12 text-white flex items-end">
+                <p className="text-sm opacity-80">
+                    © 2025 Sua aplicação
+                </p>
+                </div>
             </section>
         </main>
     )

@@ -1,15 +1,34 @@
 import ViteLogo from "../../public/vite.svg"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 // @ts-ignore
 import { setUser } from "../app/user.js"
+// @ts-ignore
+import { setTheme } from "../app/theme.js"
 import { Button } from "./ui/button.js"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Label } from "@radix-ui/react-label"
+
+import { Settings } from "lucide-react"
+
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { Switch } from "@radix-ui/react-switch"
+
+const pagesToNotShowHeader = ['/login']
 
 function Header() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
+    const shouldShowHeader = !pagesToNotShowHeader.includes(location.pathname)
 
     type User = {
         id: number,
@@ -38,12 +57,18 @@ function Header() {
         }))
     }
 
+    function handleChangeTheme(isDark : Boolean) {
+        dispatch(setTheme(isDark))
+        console.log(isDark)
+    }
+
     return (
-        <header className="flex items-center justify-between px-10 py-4">
+        <header className={`flex items-center justify-between px-10 py-4 ${shouldShowHeader ? 'block' : 'hidden'}`}>
             <div className="logo flex h-10 items-center ">
                 <img src={ViteLogo} alt="Vite Logo" className="w-8 h-8"/>
                 <h1 className="text-2xl font-bold">Stock Pocket</h1>
             </div>
+            <div className="flex gap-1 items-center">
             {
                 user?.id && (
                     <div className="flex items-center gap-1">
@@ -63,6 +88,23 @@ function Header() {
                     <Button className="text-md font-medium hover:pointer" variant="link" onClick={()=>navigate('/login')}>Login</Button>
                 )
             }
+                <Sheet>
+                    <SheetTrigger className="text-md font-medium hover:pointer"><Settings/></SheetTrigger>
+                    <SheetContent>
+                        <SheetHeader>
+                        <SheetTitle>Configurações da plataforma</SheetTitle>
+                        <SheetDescription>
+                            <div className="flex items-center space-x-2">
+                                <Switch id="dark-mode" onCheckedChange={handleChangeTheme}/>
+                                <Label htmlFor="dark-mode">dark Mode</Label>
+                            </div>
+                        </SheetDescription>
+                        </SheetHeader>
+                        
+                        
+                    </SheetContent>
+                </Sheet>
+            </div>
         </header>
     )
 }
