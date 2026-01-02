@@ -20,7 +20,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { Switch } from "@radix-ui/react-switch"
+import { Switch } from "@/components/ui/switch"
 
 const pagesToNotShowHeader = ['/login']
 
