@@ -3,15 +3,14 @@ import { AppSidebar } from "@/components/app-sidebar"
 
 function InitialPage() {
   return (
-    <div>
-      <h1>Initial Page</h1>
+    <main>
       <SidebarProvider>
       <AppSidebar />
       <main>
         <SidebarTrigger />
       </main>
     </SidebarProvider>
-    </div>
+    </main>
   )
 }
 

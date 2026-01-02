@@ -6,6 +6,8 @@ import { useNavigate, useLocation } from "react-router-dom"
 import { setUser } from "../app/user.js"
 // @ts-ignore
 import { setTheme } from "../app/theme.js"
+// @ts-ignore
+import { setGroup } from "../app/group.js"
 import { Button } from "./ui/button.js"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Label } from "@radix-ui/react-label"
@@ -22,7 +24,7 @@ import {
 } from "@/components/ui/sheet"
 import { Switch } from "@/components/ui/switch"
 
-const pagesToNotShowHeader = ['/login']
+const pagesToNotShowHeader = ['/login', '/initial-page']
 
 function Header() {
     const dispatch = useDispatch()
@@ -45,7 +47,18 @@ function Header() {
             email: 'renan@email.com',
             avatar: 'https://github.com/renandp03.png',
         }
+        const group = {
+            id: 1,
+            name: 'Empresa X',
+            logo:'https://github.com/danielbayley.png',
+            branch: {
+                id: 1,
+                name: 'Campo Grande',
+            }
+        }
         dispatch(setUser(user))
+        dispatch(setGroup(group))
+        navigate('/initial-page')
     }
 
     function handleLogout() {
@@ -85,7 +98,7 @@ function Header() {
             }
             {
                 !user?.id && (
-                    <Button className="text-md font-medium hover:pointer" variant="link" onClick={()=>navigate('/login')}>Login</Button>
+                    <Button className="text-md font-medium hover:pointer" variant="link" onClick={handleLogin}>Login</Button>
                 )
             }
                 <Sheet>

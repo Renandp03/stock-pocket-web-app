@@ -1,3 +1,6 @@
+import { useSelector } from "react-redux"
+
+//components
 import {
   Sidebar,
   SidebarHeader,
@@ -22,21 +25,27 @@ const itens = [
 ]
 
 export function AppSidebar() {
+
+  const user = useSelector((state: any) => state.user)
+  const group = useSelector((state: any) => state.group)
+
+  console.log(group)
+
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="h-16 flex items-center">
-        <div className="flex items-center gap-2 w-full">
+        <div className="flex items-center gap-2 w-full px-2">
           <Avatar className="rounded-sm">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>EMP</AvatarFallback>
+            <AvatarImage src={group?.logo} />
+            <AvatarFallback>{group?.name}</AvatarFallback>
           </Avatar>
 
           <div className="flex flex-col overflow-hidden">
             <span className="font-medium leading-none truncate">
-              Nome da empresa
+              {group?.name}
             </span>
             <span className="text-sm text-muted-foreground truncate">
-              Filial: Campo Grande
+              Filial: {group?.branch?.name}
             </span>
           </div>
         </div>
@@ -73,13 +82,17 @@ export function AppSidebar() {
             >
               <div className="flex items-center gap-2">
                 <Avatar className="rounded-sm">
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>EMP</AvatarFallback>
+                  <AvatarImage src={user?.avatar} />
+                  <AvatarFallback>{user?.name}</AvatarFallback>
                 </Avatar>
-                <Button variant="link">
-                  <LogOut className="size-4" />
-                  Logout
-                </Button>
+                <div className="flex flex-col overflow-hidden">
+                  <span className="font-medium leading-none truncate">
+                    {user?.name}
+                  </span>
+                  <span className="text-sm text-muted-foreground truncate">
+                    {user?.email}
+                  </span>
+                </div>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>

@@ -13,10 +13,10 @@ const groupReducer = createSlice({
     },
     reducers:{
         setGroup: (state, action) => {
-            state.id = action.id,
-            state.name = action.name,
-            state.logo = action.logo,
-            state.branch = action.branch
+            state.id = action.payload.id,
+            state.name = action.payload.name,
+            state.logo = action.payload.logo,
+            state.branch = action.payload.branch
         }
     }
 })
