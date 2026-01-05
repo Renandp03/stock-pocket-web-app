@@ -31,6 +31,7 @@ function Header() {
     const navigate = useNavigate()
     const location = useLocation()
     const shouldShowHeader = !pagesToNotShowHeader.includes(location.pathname)
+    const isDark = useSelector((state: any) => state.theme.isDark)
 
     type User = {
         id: number,
@@ -58,6 +59,9 @@ function Header() {
         }
         dispatch(setUser(user))
         dispatch(setGroup(group))
+        localStorage.setItem('stock-pocket-user', JSON.stringify(user))
+        localStorage.setItem('stock-pocket-group', JSON.stringify(group))
+
         navigate('/initial-page')
     }
 
@@ -71,7 +75,8 @@ function Header() {
     }
 
     function handleChangeTheme(isDark : Boolean) {
-        dispatch(setTheme(isDark))
+        dispatch(setTheme({ isDark }))
+        localStorage.setItem('stock-pocket-theme', isDark ? 'dark' : 'light')
         console.log(isDark)
     }
 
@@ -108,7 +113,7 @@ function Header() {
                         <SheetTitle>Configurações da plataforma</SheetTitle>
                         <SheetDescription>
                             <div className="flex items-center space-x-2">
-                                <Switch id="dark-mode" onCheckedChange={handleChangeTheme}/>
+                                <Switch id="dark-mode" onCheckedChange={handleChangeTheme} checked={isDark} />
                                 <Label htmlFor="dark-mode">dark Mode</Label>
                             </div>
                         </SheetDescription>

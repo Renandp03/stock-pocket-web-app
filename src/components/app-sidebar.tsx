@@ -29,12 +29,10 @@ export function AppSidebar() {
   const user = useSelector((state: any) => state.user)
   const group = useSelector((state: any) => state.group)
 
-  console.log(group)
-
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="h-16 flex items-center">
-        <div className="flex items-center gap-2 w-full px-2">
+      <SidebarHeader className="h-16 flex items-center group-data-[collapsible=offcanvas]:px-4">
+        <div className="flex items-center gap-2 w-full">
           <Avatar className="rounded-sm">
             <AvatarImage src={group?.logo} />
             <AvatarFallback>{group?.name}</AvatarFallback>
@@ -74,12 +72,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              tooltip="Logout"
-            >
+        
               <div className="flex items-center gap-2">
                 <Avatar className="rounded-sm">
                   <AvatarImage src={user?.avatar} />
@@ -94,9 +87,7 @@ export function AppSidebar() {
                   </span>
                 </div>
               </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+           
       </SidebarFooter>
     </Sidebar>
   )

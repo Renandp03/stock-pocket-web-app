@@ -3,7 +3,7 @@ import {LaptopMinimalCheck,PackageOpen, ChartColumnBig} from "lucide-react"
 function Home() {
     return (
         <main>
-            <section className="mx-auto flex items-center px-10 py-20 w-full bg-[#f5f5f5] mb-20">
+            <section className="mx-auto flex items-center px-10 py-20 w-full bg-[#f5f5f5] mb-20 dark:bg-[#333333]">
                 <div>
                     <h1 className="text-3xl font-bold">
                         Stock Pocket

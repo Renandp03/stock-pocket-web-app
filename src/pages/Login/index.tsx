@@ -35,8 +35,8 @@ function LoginPage(){
             if(!email || !password) {
                 throw new Error('Email and password are required')
             }
-            const {data} = await axios.post('/login', {email, password})
-            return data
+            // const {data} = await axios.post('/login', {email, password})
+            return {}
         } catch (error) {
             console.error(error)
         }
