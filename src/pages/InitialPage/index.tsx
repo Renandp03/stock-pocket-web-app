@@ -17,7 +17,8 @@ import { Label } from "@radix-ui/react-label"
 import { Settings } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 import { useDispatch, useSelector } from "react-redux"
-import { setTheme } from "@/app/theme.js"
+// @ts-ignore
+import { setTheme } from "@/reducer/theme.js"
 import { AppSidebar } from "@/components/app-sidebar"
 
 function InitialPage() {
@@ -56,8 +57,6 @@ function InitialPage() {
                       </div>
                   </SheetDescription>
                   </SheetHeader>
-                  
-                  
               </SheetContent>
             </Sheet>
           </div>

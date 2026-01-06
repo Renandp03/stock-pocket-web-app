@@ -1,9 +1,12 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { setUser } from './app/user.js'
-import { setGroup } from './app/group.js'
-import { setTheme } from './app/theme.js'
+// @ts-ignore
+import { setUser } from './reducer/user.js'
+// @ts-ignore
+import { setGroup } from './reducer/group.js'
+// @ts-ignore
+import { setTheme } from './reducer/theme.js'
 
 //Components
 import Header from './components/header'

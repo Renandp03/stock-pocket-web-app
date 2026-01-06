@@ -3,11 +3,11 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { useNavigate, useLocation } from "react-router-dom"
 // @ts-ignore
-import { setUser } from "../app/user.js"
+import { setUser } from "../reducer/user.js"
 // @ts-ignore
-import { setTheme } from "../app/theme.js"
+import { setTheme } from "../reducer/theme.js"
 // @ts-ignore
-import { setGroup } from "../app/group.js"
+import { setGroup } from "../reducer/group.js"
 import { Button } from "./ui/button.js"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Label } from "@radix-ui/react-label"
