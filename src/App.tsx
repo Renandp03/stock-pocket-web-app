@@ -1,12 +1,9 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-// @ts-ignore
-import { setUser } from './reducer/user.js'
-// @ts-ignore
-import { setGroup } from './reducer/group.js'
-// @ts-ignore
-import { setTheme } from './reducer/theme.js'
+import { setUser } from './reducer/user.ts'
+import { setGroup } from './reducer/group.ts'
+import { setTheme } from './reducer/theme.ts'
+import { useAppDispatch, useAppSelector } from './reducer/hooks.ts'
 
 //Components
 import Header from './components/header'
@@ -17,9 +14,9 @@ import LoginPage from './pages/Login'
 import InitialPage from './pages/InitialPage'
 
 function App() {
-  const dispatch = useDispatch()
-  const isDark = useSelector((state: any) => state.theme.isDark)
-  if (isDark !== (localStorage.getItem('stock-pocket-theme') === 'dark')) dispatch(setTheme({ isDark: localStorage.getItem('stock-pocket-theme') === 'dark' }))
+  const dispatch = useAppDispatch()
+  const isDark = useAppSelector((state: any) => state.theme.isDark)
+  if (isDark !== (localStorage.getItem('stock-pocket-theme') === 'dark')) dispatch(setTheme(localStorage.getItem('stock-pocket-theme') === 'dark'))
 
   const cachedUser = localStorage.getItem('stock-pocket-user')
   const cachedGroup = localStorage.getItem('stock-pocket-group')

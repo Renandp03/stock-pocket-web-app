@@ -1,8 +1,5 @@
 import { useState } from "react"
 
-//components
-import { Button } from "@/components/ui/button"
-
 
 import { Plus, Minus } from "lucide-react"
 
@@ -35,26 +32,27 @@ function ProductCard({ product }: { product: Product }) {
             <span className="text-lg font-bold">{product.name}</span>
             <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium">{product.price.toFixed(2)}</span>
-                <div className="flex items-center gap-2">
-                    <Button 
-                    variant="outline" 
-                    className="rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none bg-red-400" 
-                    onClick={() => handleQuantityChange(-1)}
-                    disabled={quantity <= 0}>
-                        <Minus />
-                    </Button>
-                    <span className="text-sm font-medium">{quantity}</span>
-                    <Button 
-                    variant="outline" 
-                    className="rounded-tr-md rounded-br-md rounded-tl-none rounded-bl-none bg-green-400" 
-                    onClick={() => handleQuantityChange(1)}
-                    disabled={quantity >= product.limit}>
-                        <Plus />
-                    </Button>
-                </div>  
+                  
 
             </div>
             <span className="text-sm font-medium">{product.description}</span>
+            <div className="flex justify-end">
+                <div className="flex items-center gap-2">
+                    <button 
+                    className="rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none bg-red-400 cursor-pointer" 
+                    onClick={() => handleQuantityChange(-1)}
+                    disabled={quantity <= 0}>
+                        <Minus />
+                    </button>
+                    <span className="text-sm font-medium p-2">{quantity}</span>
+                    <button 
+                    className="rounded-tr-md rounded-br-md rounded-tl-none rounded-bl-none bg-green-400 cursor-pointer" 
+                    onClick={() => handleQuantityChange(1)}
+                    disabled={quantity >= product.limit}>
+                        <Plus />
+                    </button>
+                </div>
+            </div>
         </footer>
     </div>
   )

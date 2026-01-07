@@ -1,13 +1,9 @@
 import ViteLogo from "../../public/vite.svg"
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
 import { useNavigate, useLocation } from "react-router-dom"
-// @ts-ignore
-import { setUser } from "../reducer/user.js"
-// @ts-ignore
-import { setTheme } from "../reducer/theme.js"
-// @ts-ignore
-import { setGroup } from "../reducer/group.js"
+import { setUser, clearUser, type UserState } from "../reducer/user.ts"
+import { setTheme } from "../reducer/theme.ts"
+import { setGroup, type GroupState } from "../reducer/group.ts"
+import { useAppDispatch, useAppSelector } from "@/reducer/hooks.ts"
 import { Button } from "./ui/button.js"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Label } from "@radix-ui/react-label"
@@ -27,33 +23,27 @@ import { Switch } from "@/components/ui/switch"
 const pagesToNotShowHeader = ['/login', '/initial-page']
 
 function Header() {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const location = useLocation()
     const shouldShowHeader = !pagesToNotShowHeader.includes(location.pathname)
-    const isDark = useSelector((state: any) => state.theme.isDark)
-
-    type User = {
-        id: number,
-        name: string,
-        email: string,
-        avatar: string,
-    }
-    const user: User | null = useSelector((state: any) => state.user)
+    const isDark = useAppSelector((state: any) => state.theme.isDark)
+    const user: UserState | null = useAppSelector((state: any) => state.user)
 
     function handleLogin() {
-        const user = {
-            id: 1,
+        const user : UserState = {
+            id: '1',
             name: 'Renan',
             email: 'renan@email.com',
             avatar: 'https://github.com/renandp03.png',
+            token: '123456',
         }
-        const group = {
-            id: 1,
+        const group : GroupState = {
+            id: '1',
             name: 'Empresa X',
             logo:'https://github.com/danielbayley.png',
             branch: {
-                id: 1,
+                id: '1',
                 name: 'Campo Grande',
             }
         }
@@ -66,16 +56,11 @@ function Header() {
     }
 
     function handleLogout() {
-        dispatch(setUser({
-            id: null,
-            name: null,
-            email: null,
-            avatar: null,
-        }))
+        dispatch(clearUser())
     }
 
-    function handleChangeTheme(isDark : Boolean) {
-        dispatch(setTheme({ isDark }))
+    function handleChangeTheme(isDark : boolean) {  
+        dispatch(setTheme(isDark))
         localStorage.setItem('stock-pocket-theme', isDark ? 'dark' : 'light')
         console.log(isDark)
     }
@@ -89,7 +74,7 @@ function Header() {
             <div className="flex gap-1 items-center">
             {
                 user?.id && (
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1" onClick={handleLogout}>
                         <Avatar>
                             <AvatarImage src={user?.avatar} />
                             <AvatarFallback>{user?.name?.charAt(0).toUpperCase()}</AvatarFallback>

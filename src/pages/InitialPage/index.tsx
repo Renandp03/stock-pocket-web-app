@@ -26,7 +26,7 @@ function InitialPage() {
   const dispatch = useDispatch()
   const isDark = useSelector((state: any) => state.theme.isDark)
   function handleChangeTheme(isDark : Boolean) {
-      dispatch(setTheme({ isDark }))
+      dispatch(setTheme(isDark))
       localStorage.setItem('stock-pocket-theme', isDark ? 'dark' : 'light')
   }
 
@@ -90,7 +90,7 @@ function InitialPage() {
           </div>
 
         </header>
-        <section className="products-container grid grid-cols-4 gap-4">
+        <section className="products-container grid grid-cols-4 gap-4 p-2">
           {productsList.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
