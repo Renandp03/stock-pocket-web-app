@@ -1,4 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -25,7 +26,7 @@ import ProductCard from "./components/productCard"
 function InitialPage() {
   const dispatch = useDispatch()
   const isDark = useSelector((state: any) => state.theme.isDark)
-  function handleChangeTheme(isDark : Boolean) {
+  function handleChangeTheme(isDark : boolean) {
       dispatch(setTheme(isDark))
       localStorage.setItem('stock-pocket-theme', isDark ? 'dark' : 'light')
   }
@@ -72,7 +73,17 @@ function InitialPage() {
             </BreadcrumbList>
           </Breadcrumb>
 
-          <div className="ml-auto">
+          <div className="ml-auto flex gap-2 items-center">
+            <Tabs defaultValue="grid" className="w-[400px]"
+            onValueChange={value => {
+              console.log(value)
+            }}
+            >
+              <TabsList>
+                <TabsTrigger value="grid">Grid</TabsTrigger>
+                <TabsTrigger value="table">Table</TabsTrigger>
+              </TabsList>
+            </Tabs>
             <Sheet>
               <SheetTrigger className="text-md font-medium hover:pointer"><Settings/></SheetTrigger>
               <SheetContent>

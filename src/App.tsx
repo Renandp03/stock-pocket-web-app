@@ -45,7 +45,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path='initial-page' element={<InitialPage/>} />
+          <Route path='initial-page' element={<InitialPage/>}>
+            <Route path='confirmacao-de-venda' element={<InitialPage />} />
+          </Route>
           
         </Routes>
       </Router>
