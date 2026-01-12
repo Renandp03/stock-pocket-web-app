@@ -15,12 +15,13 @@ type Product = {
 
 type QuantityChange = -1 | 1
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({ product, onChangeCount, productCount }: { product: Product, onChangeCount: (id: number, count: number) => void, productCount: number }) {
 
     const [quantity, setQuantity] = useState(0)
     function handleQuantityChange(change: QuantityChange) {
         if (quantity + change < 0 || product.limit && quantity + change > product.limit) return
         setQuantity(quantity + change)
+        onChangeCount(product.id, quantity + change)
     }
   return (
     <div className="">
@@ -35,23 +36,23 @@ function ProductCard({ product }: { product: Product }) {
                 <span className="text-sm font-medium">{product.price.toFixed(2)}</span>
             </div>
             <span className="text-sm font-medium">{product.description}</span>
-            {quantity === 0 && 
-                <Button className="w-full mt-2 cursor-pointer" onClick={() => handleQuantityChange(1)}>Adicionar ao carrinho</Button>
+            {productCount === 0 && 
+                <Button className="w-full mt-2 cursor-pointer" onClick={() => onChangeCount(product.id, 1)}>Adicionar ao carrinho</Button>
             }
-            {quantity > 0 && 
+            {productCount > 0 && 
                 <div className="flex justify-center mt-2">
                 <div className="flex items-center gap-2">
                     <button 
                     className="rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none bg-red-400 cursor-pointer" 
-                    onClick={() => handleQuantityChange(-1)}
-                    disabled={quantity <= 0}>
+                    onClick={() => onChangeCount(product.id, -1)}
+                    disabled={productCount <= 0}>
                         <Minus />
                     </button>
-                    <span className="text-sm font-medium p-2">{quantity}</span>
+                    <span className="text-sm font-medium p-2">{productCount}</span>
                     <button 
                     className="rounded-tr-md rounded-br-md rounded-tl-none rounded-bl-none bg-green-400 cursor-pointer" 
-                    onClick={() => handleQuantityChange(1)}
-                    disabled={quantity >= product.limit}>
+                    onClick={() => onChangeCount(product.id, 1)}
+                    disabled={productCount >= product.limit}>
                         <Plus />
                     </button>
                 </div>

@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import {
   Card,

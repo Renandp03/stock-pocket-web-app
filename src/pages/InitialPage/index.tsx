@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,7 +16,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Label } from "@radix-ui/react-label"
-import { Settings, LayoutGrid, List } from "lucide-react"
+import { Settings, LayoutGrid, List, ShoppingCart } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 import { useDispatch, useSelector } from "react-redux"
 import { setTheme } from "@/reducer/theme.ts"
@@ -33,7 +33,7 @@ function InitialPage() {
       dispatch(setTheme(isDark))
       localStorage.setItem('stock-pocket-theme', isDark ? 'dark' : 'light')
   }
-
+  const [productsCount, setProductsCount] = useState<{ [id: number]: number }>({})
   const productsList = [
     {
       id: 1,
@@ -60,6 +60,22 @@ function InitialPage() {
       limit: 10,
     },
   ]
+
+  function handleChangeProductCount(id: number, count: number) {
+    if(productsCount[id]){
+      if(productsCount[id] + count < 0) return
+      setProductsCount({
+        ...productsCount,
+        [id]: productsCount[id] + count,
+      })
+    }
+    else{
+      setProductsCount({
+        ...productsCount,
+        [id]: count,
+      })
+    }
+  }
   return (
     <main className="w-screen h-screen">
       <SidebarProvider>
@@ -115,7 +131,7 @@ function InitialPage() {
           <section className="products-container grid grid-cols-4 gap-4 p-2">
           {productsList.map((product) =>
            (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} onChangeCount={handleChangeProductCount} productCount={productsCount[product.id] || 0} />
           )) 
           }
         </section>)}
@@ -124,6 +140,13 @@ function InitialPage() {
             <DataTable columns={columns} data={productsList} />
         </section>)}
       </div>
+      {Object.values(productsCount).some(count => count > 0) && (
+        <button className="flex items-center gap-2 fixed bottom-4 right-4 cursor-pointer bg-primary text-primary-foreground p-2 rounded-md" 
+        onClick={()=>console.log(productsCount)}>
+          <ShoppingCart className="size-4"/>
+          Comprar
+        </button>
+      )}
     </SidebarProvider>
     </main>
   )
