@@ -25,7 +25,7 @@ function ProductCard({ product }: { product: Product }) {
   return (
     <div className="">
         <div className="product-image-content relative ">
-            <img src={product.image} alt={product.name} className="w-full h-full max-h-40 bg-[#D9D9D9] object-cover rounded-tl-md rounded-tr-md"/>
+            <img src={product.image} alt={product.name} className="w-full h-full max-h-40 object-cover rounded-tl-md rounded-tr-md"/>
             <span className="absolute bottom-2 right-2 text-lg font-bold text-[#D9D9D9]">R$ {product.price.toFixed(2)}</span>
         </div>
         

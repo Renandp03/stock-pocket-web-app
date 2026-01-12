@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
@@ -15,17 +16,19 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Label } from "@radix-ui/react-label"
-import { Settings } from "lucide-react"
+import { Settings, LayoutGrid, List } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 import { useDispatch, useSelector } from "react-redux"
-// @ts-ignore
-import { setTheme } from "@/reducer/theme.js"
+import { setTheme } from "@/reducer/theme.ts"
 import { AppSidebar } from "@/components/app-sidebar"
 import ProductCard from "./components/productCard"
+import DataTable from "@/components/data-table"
+import { columns } from "./components/columns"
 
 function InitialPage() {
   const dispatch = useDispatch()
   const isDark = useSelector((state: any) => state.theme.isDark)
+  const [listMode, setListMode] = useState('grid')
   function handleChangeTheme(isDark : boolean) {
       dispatch(setTheme(isDark))
       localStorage.setItem('stock-pocket-theme', isDark ? 'dark' : 'light')
@@ -62,26 +65,33 @@ function InitialPage() {
       <SidebarProvider>
       <AppSidebar />
       <div className="w-full p-4 ">
-        <header className="bg-background text-foreground p-2 flex items-center w-full rounded-md gap-2">
-          <SidebarTrigger />
-          <div className="separetor-line w-px h-4 bg-foreground"></div>
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbPage>Frente de Caixa</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+        <header className="bg-background text-foreground p-2 flex items-center justify-between w-full rounded-md gap-2">
+          <div className="flex items-center gap-2">
+            <SidebarTrigger />
+            <div className="separetor-line w-px h-4 bg-foreground"></div>
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Frente de Caixa</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+          
 
-          <div className="ml-auto flex gap-2 items-center">
-            <Tabs defaultValue="grid" className="w-[400px]"
+          <div className="flex gap-2 items-center">
+            <Tabs defaultValue="grid"
             onValueChange={value => {
-              console.log(value)
+              setListMode(value)
             }}
             >
               <TabsList>
-                <TabsTrigger value="grid">Grid</TabsTrigger>
-                <TabsTrigger value="table">Table</TabsTrigger>
+                <TabsTrigger value="grid">
+                  <LayoutGrid/>
+                </TabsTrigger>
+                <TabsTrigger value="list">
+                  <List/>
+                </TabsTrigger>
               </TabsList>
             </Tabs>
             <Sheet>
@@ -101,11 +111,18 @@ function InitialPage() {
           </div>
 
         </header>
-        <section className="products-container grid grid-cols-4 gap-4 p-2">
-          {productsList.map((product) => (
+        { listMode === 'grid' && (
+          <section className="products-container grid grid-cols-4 gap-4 p-2">
+          {productsList.map((product) =>
+           (
             <ProductCard key={product.id} product={product} />
-          ))}
-        </section>
+          )) 
+          }
+        </section>)}
+        { listMode === 'list' && (
+          <section >
+            <DataTable columns={columns} data={productsList} />
+        </section>)}
       </div>
     </SidebarProvider>
     </main>
