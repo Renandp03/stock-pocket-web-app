@@ -69,8 +69,7 @@ export const columns: ColumnDef<Product>[] = [
               Copy product ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View product details</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => console.log(product)}>Adicionar produto</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

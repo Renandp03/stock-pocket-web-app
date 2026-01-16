@@ -26,14 +26,14 @@ function ProductCard({ product, onChangeCount, productCount }: { product: Produc
   return (
     <div className="">
         <div className="product-image-content relative ">
-            <img src={product.image} alt={product.name} className="w-full h-full max-h-40 object-cover rounded-tl-md rounded-tr-md"/>
-            <span className="absolute bottom-2 right-2 text-lg font-bold text-[#D9D9D9]">R$ {product.price.toFixed(2)}</span>
+            <img src={product.image} alt={product.name} className="w-full h-40 max-h-40 object-cover rounded-tl-md rounded-tr-md"/>
+            <span className="absolute bottom-2 right-2 text-lg font-bold text-[#D9D9D9]">{product.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
         </div>
         
         <footer className="flex flex-col p-4 bg-foreground text-background rounded-bl-md rounded-br-md w-full box-border overflow-hidden">
             <span className="text-lg font-bold">{product.name}</span>
             <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">{product.price.toFixed(2)}</span>
+                <span className="text-sm font-medium">{product.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
             </div>
             <span className="text-sm font-medium">{product.description}</span>
             {productCount === 0 && 

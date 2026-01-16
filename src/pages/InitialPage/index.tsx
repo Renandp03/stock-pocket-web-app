@@ -16,7 +16,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Label } from "@radix-ui/react-label"
-import { Settings, LayoutGrid, List, ShoppingCart } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Settings, LayoutGrid, List, ShoppingCart, Search } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 import { useDispatch, useSelector } from "react-redux"
 import { setTheme } from "@/reducer/theme.ts"
@@ -24,6 +25,16 @@ import { AppSidebar } from "@/components/app-sidebar"
 import ProductCard from "./components/productCard"
 import DataTable from "@/components/data-table"
 import { columns } from "./components/columns"
+
+
+type Product = {
+  id: number,
+  name: string,
+  price: number,
+  image: string,
+  description: string,
+  limit: number,
+}
 
 function InitialPage() {
   const dispatch = useDispatch()
@@ -33,8 +44,8 @@ function InitialPage() {
       dispatch(setTheme(isDark))
       localStorage.setItem('stock-pocket-theme', isDark ? 'dark' : 'light')
   }
-  const [productsCount, setProductsCount] = useState<{ [id: number]: number }>({})
-  const productsList = [
+
+  const data : Product[] = [
     {
       id: 1,
       name: 'Produto 1',
@@ -61,6 +72,10 @@ function InitialPage() {
     },
   ]
 
+  const [productsCount, setProductsCount] = useState<{ [id: number]: number }>({})
+  const [productsList, setProductsList] = useState<Product[]>(data)
+  const [searchTerm, setSearchTerm] = useState('')
+
   function handleChangeProductCount(id: number, count: number) {
     if(productsCount[id]){
       if(productsCount[id] + count < 0) return
@@ -76,12 +91,17 @@ function InitialPage() {
       })
     }
   }
+
+  function handleChangeSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchTerm(e.target.value)
+    setProductsList(data.filter(product => product.name.toLowerCase().includes(e.target.value.toLowerCase())))
+  }
   return (
     <main className="w-screen h-screen">
       <SidebarProvider>
       <AppSidebar />
       <div className="w-full p-4 ">
-        <header className="bg-background text-foreground p-2 flex items-center justify-between w-full rounded-md gap-2">
+        <header className="bg-background text-foreground py-2 flex items-center justify-between w-full rounded-md gap-2">
           <div className="flex items-center gap-2">
             <SidebarTrigger />
             <div className="separetor-line w-px h-4 bg-foreground"></div>
@@ -127,6 +147,10 @@ function InitialPage() {
           </div>
 
         </header>
+        <div className="searchbar-container flex items-center justify-center p-2 rounded-md bg-background gap-2">
+          <Search className="size-4 "/>
+          <Input placeholder="Buscar produto" className="w-full h-8" onChange={handleChangeSearch}/>
+        </div>
         { listMode === 'grid' && (
           <section className="products-container grid grid-cols-4 gap-4 p-2">
           {productsList.map((product) =>
